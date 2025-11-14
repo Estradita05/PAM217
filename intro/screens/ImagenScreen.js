@@ -25,9 +25,9 @@ export default function ImagenScreen() {
     
     <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
-        source={{
-          uri: 'https://wallpapercave.com/wp/wp3850825.jpg',
-        }} 
+        source={
+          require('favicon.png')
+        }
         style={styles.background} 
       >
         
