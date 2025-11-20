@@ -4,22 +4,22 @@ import React, {Component, useState } from 'react';
 
 export default function EntradasScreen() {
 
-    const[nombre, setNombre]= useState('');
-    const [password, setPassword]= useState('');
-    const [comentario, setComentario]= useState('');
+  const[nombre, setNombre]= useState('');
+  const [password, setPassword]= useState('');
+  const [comentario, setComentario]= useState('');
 
-    const mostrarAlerta= () => {
-        if([nombre.trim(), password.trim(), comentario.trim()].includes ('')) {
-            Alert.alert('Error', 'Por favor ingrese un nombre valido');
-            alert ('Por favor ingrese un nombre valido');
+  const mostrarAlerta= () => {
+    if([nombre.trim(), password.trim(), comentario.trim()].includes ('')) {
+     Alert.alert('Error', 'Por favor ingrese un nombre valido');
+     alert ('Por favor ingrese un nombre valido');
 
-         }  else{
-            Alert.alert(`¡Hola, ${nombre}!`, 'Tu nombre ha sido registrado correctamente' );
-            alert (`¡Hola, ${nombre}! Tu nombre ha sido registrado correctamente. Tu comtraseña es ${password}`);
+    } else{
+      Alert.alert(`¡Hola, ${nombre}!`, 'Tu nombre ha sido registrado correctamente' );
+      alert (`¡Hola, ${nombre}! Tu nombre ha sido registrado correctamente. Tu comtraseña es ${password}`);
          
-            setNombre('');
-        }
-       };
+      setNombre('');
+    }
+  };
 
 
 return (
@@ -48,12 +48,12 @@ return (
     numberOfLines={4}
     />
 
-    <Button title="Saludar" onPress={mostrarAlerta} color= '#df2db9ff' />
+  <Button title="Saludar" onPress={mostrarAlerta} color= '#df2db9ff' />
    
-   </View>
+</View>
     
-  );
-  }
+ );
+}
 
 const styles = StyleSheet.create({
   container: {

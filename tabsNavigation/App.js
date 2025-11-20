@@ -18,14 +18,14 @@ export default function App() {
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
 
-                        if (route.name === 'Home') {
-                            iconName = 'Home';
-                        } else if (route.name === 'Profile') {
-                            iconName = 'Person';
-                        } else if (route.name === 'Settings') {
-                            iconName = 'Settings';
-                        }
-                        return <Ionicons name={iconName} size={size} color={color} />;
+                       if (route.name === 'Home') {
+        iconName = focused ? 'home' : 'home-outline';
+      } else if (route.name === 'Profile') {
+        iconName = focused ? 'person' : 'person-outline';
+      } else if (route.name === 'Settings') {
+        iconName = focused ? 'settings' : 'settings-outline';
+      }
+                        return <Ionicons name={iconName} size={24} color={color} />
                     },
                     tabBarActiveTintColor: '#007BFF',
                     tabBarInactiveTintColor: 'gray',

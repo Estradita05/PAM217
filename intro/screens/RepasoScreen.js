@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {View,Text,TextInput,Button,Alert,Switch,ImageBackground,Image,StyleSheet,SafeAreaView} from 'react-native';
 
-export default function RegistroScreen() {
+export default function RepasoScreen() {
   
   const [showSplash, setShowSplash] = useState(true); 
   const [nombre, setNombre] = useState('');
@@ -9,11 +9,10 @@ export default function RegistroScreen() {
   const [aceptaTerminos, setAceptaTerminos] = useState(false);
 
   
-  useEffect(() => 
-    {
+  useEffect(() => { 
     const timer = setTimeout(() => 
-      {
-      setShowSplash(false);
+      { setShowSplash(false);
+
       }, 2000);
     return () => clearTimeout(timer);
     }, []);
