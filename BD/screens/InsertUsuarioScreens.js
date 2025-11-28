@@ -10,6 +10,8 @@ export default function InsertUsuarioScreen() {
     const [nombre, setNombre] = useState('');
     const [loading, setLoading] = useState(true);
     const [guardando, setGuardando] = useState(false);
+    const [editandoId, setEditandoId] = useState(null);
+    const [nuevoNombre, setNuevoNombre] = useState('');
 
     // SELECT: Función para cargar usuarios
     const cargarUsuarios = useCallback(async () => {
@@ -74,6 +76,27 @@ export default function InsertUsuarioScreen() {
                     })}
                 </Text>
             </View>
+            
+            <TouchableOpacity
+            onPress={()=> {
+                setEditandoId(item.id);
+                setNuevoNombre(item.nombre);
+            } }
+            >
+                <Text style={{ color: 'blue', marginRight: 10 }}>Editar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            onPress={( ) =>
+                Alert.alert( "Eliminar Usuario", "¿Estás seguro de eliminar este usuario?", [
+                    { text: "Cancelar"},
+                    { text: "Eliminar",  onPress: async () => await controller.eliminarUsuario(item.id) }
+                ])
+            }
+            >
+                <Text style={{ color: 'red' }}>Eliminar</Text>
+            </TouchableOpacity>
+
         </View>
     );
 
@@ -104,6 +127,40 @@ export default function InsertUsuarioScreen() {
                         )}
                     </TouchableOpacity>
                 </View>
+
+                {editandoId && (
+                    <View style={styles.card}>
+                        <Text style={styles.cardTitle}>Editar Usuario</Text>
+
+                        <TextInput
+                            style={styles.input}
+                            value={nuevoNombre}
+                            onChangeText={setNuevoNombre}
+                        />
+
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={async () => {
+                                await controller.actualizarUsuario(editandoId, nuevoNombre);
+                                setEditandoId(null);
+                                setNuevoNombre("");
+                            }}
+                        >
+                            <Text style={styles.buttonText}>Guardar Cambios</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() => {
+                                setEditandoId(null);
+                                setNuevoNombre("");
+                            }}
+                        >
+                            <Text style={{ color: "red", textAlign: "center", marginTop: 10 }}>
+                                Cancelar
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
 
                 {/* Lista Select */}
                 <View style={[styles.card, styles.listCard]}>

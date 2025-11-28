@@ -57,6 +57,40 @@ class DatabaseService {
             };
         }
     }
+
+    async update(id, nombre) {
+        if (Platform.OS === 'web') {
+            const usuarios = await this.getAll();
+            const index = usuarios.findIndex(u => u.id === id);
+            if (index !== -1) {
+                usuarios[index].nombre = nombre;
+                localStorage.setItem(this.storageKey, JSON.stringify(usuarios));
+            }
+            return true;
+        } else {
+            await this.db.runAsync(
+                "UPDATE usuarios SET nombre = ? WHERE id = ?",
+                [nombre, id]
+            );
+            return true;
+        }
+    }
+
+    async delete(id) {
+        if (Platform.OS === 'web') {
+            let usuarios = await this.getAll();
+            usuarios = usuarios.filter(u => u.id !== id);
+            localStorage.setItem(this.storageKey, JSON.stringify(usuarios));
+            return true;
+        } else {
+            await this.db.runAsync(
+                "DELETE FROM usuarios WHERE id = ?",
+                [id]
+            );
+            return true;
+        }
+    }
 }
+
 // Exportar instancia de la clase (Singleton)
 export default new DatabaseService();
