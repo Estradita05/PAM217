@@ -1,128 +1,161 @@
 import React, { useState, useEffect } from 'react';
-import {View,Text,TextInput,Button,Alert,Switch,ImageBackground,Image,StyleSheet,SafeAreaView} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  Alert,
+  Switch,
+  ImageBackground,
+  Image,
+  StyleSheet,
+  SafeAreaView
+} from 'react-native';
 
 export default function RepasoScreen() {
-  
-  const [showSplash, setShowSplash] = useState(true); 
+
+  // Estado para mostrar la pantalla splash por 2 segundos
+  const [showSplash, setShowSplash] = useState(true);
+
+  // Estados para el formulario
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
   const [aceptaTerminos, setAceptaTerminos] = useState(false);
 
-  
-  useEffect(() => { 
-    const timer = setTimeout(() => 
-      { setShowSplash(false);
+  // Efecto para ocultar el splash después de 2 segundos
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2000);
 
-      }, 2000);
-    return () => clearTimeout(timer);
-    }, []);
+    return () => clearTimeout(timer); // Limpieza del temporizador
+  }, []);
 
-  const mostrarAlerta = () => 
-  {
-    if (nombre.trim() === '') 
-      {
+  // Función para validar los campos y mostrar alertas
+  const mostrarAlerta = () => {
+
+    // Validar nombre vacío
+    if (nombre.trim() === '') {
       Alert.alert('Error', 'Debes ingresar tu nombre completo.');
-       alert('Error', 'Debes ingresar tu nombre completo.');
-         return;
-      }
+      alert('Error', 'Debes ingresar tu nombre completo.');
+      return;
+    }
 
-    if (correo.trim() === '') 
-      {
+    // Validar correo vacío
+    if (correo.trim() === '') {
       Alert.alert('Error', 'Debes ingresar tu correo electrónico.');
-       alert('Error', 'Debes ingresar tu correo electrónico.');
-         return;
-      }
+      alert('Error', 'Debes ingresar tu correo electrónico.');
+      return;
+    }
 
+    // Validar formato de correo
     const formatoCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formatoCorreo.test(correo)) 
-      {
+    if (!formatoCorreo.test(correo)) {
       Alert.alert('Error', 'El correo ingresado no es válido.');
-       alert('Error', 'El correo ingresado no es válido.');
-         return;
-      }
+      alert('Error', 'El correo ingresado no es válido.');
+      return;
+    }
 
-    if (!aceptaTerminos) 
-      {
+    // Validar términos y condiciones
+    if (!aceptaTerminos) {
       Alert.alert('Aviso', 'Debes aceptar los términos y condiciones.');
-       alert('Aviso', 'Debes aceptar los términos y condiciones.');
-         return;
-      }
+      alert('Aviso', 'Debes aceptar los términos y condiciones.');
+      return;
+    }
 
-    Alert.alert('Registro exitoso',`Datos registrados correctamente: Nombre: ${nombre} Correo: ${correo}`);
+    // Si todo es válido, mostrar éxito
+    Alert.alert(
+      'Registro exitoso',
+      `Datos registrados correctamente: Nombre: ${nombre} Correo: ${correo}`
+    );
 
+    // Limpiar formulario después de registrar
     setNombre('');
     setCorreo('');
     setAceptaTerminos(false);
   };
 
-  
+  // --- PANTALLA DE CARGA (SPLASH) ---
   if (showSplash) {
     return (
       <View style={styles.splashContainer}>
         <Image
           source={{
-            uri: 'https://wallpapercave.com/wp/wp3850825.jpg' 
+            uri: 'https://wallpapercave.com/wp/wp3850825.jpg'
           }}
           style={styles.splashLogo}
         />
+
         <Text style={styles.splashText}>Bienvenido </Text>
       </View>
     );
   }
 
-  
+  // --- PANTALLA PRINCIPAL ---
   return (
-   <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
-        source=
-        {{
+        source={{
           uri: 'https://wallpapercave.com/wp/wp3850825.jpg'
         }}
-        style={styles.background}>
-        
-    <View style={styles.container}>
-      <Image
-       source=
-       {{
-        uri: 'https://wallpapercave.com/wp/wp3850825.jpg' 
-      }}
-      style={styles.logo}/>
+        style={styles.background}
+      >
+        <View style={styles.container}>
 
-    <Text style={styles.titulo}>Registro de Usuario</Text>
+          {/* Imagen de avatar */}
+          <Image
+            source={{
+              uri: 'https://wallpapercave.com/wp/wp3850825.jpg'
+            }}
+            style={styles.logo}
+          />
 
-    <TextInput
-      style={styles.input}
-      placeholder="Nombre completo"
-      value={nombre}
-      onChangeText={setNombre}
-    />
+          <Text style={styles.titulo}>Registro de Usuario</Text>
 
-    <TextInput
-      style={styles.input}
-      placeholder="Correo electrónico"
-      keyboardType="email-address"
-      value={correo}
-      onChangeText={setCorreo}
-    />
+          {/* Input nombre */}
+          <TextInput
+            style={styles.input}
+            placeholder="Nombre completo"
+            value={nombre}
+            onChangeText={setNombre}
+          />
 
-    <View style={styles.switchContainer}>
-      <Text style={styles.texto}>Aceptar términos y condiciones</Text>
-         <Switch
-            value={aceptaTerminos}
-            onValueChange={setAceptaTerminos}
-            thumbColor={aceptaTerminos ? '#FF69B4' : '#f4f3f4'}
-            trackColor={{ false: '#ccc', true: '#FFB6C1' }}
-         />
-    </View>
+          {/* Input correo */}
+          <TextInput
+            style={styles.input}
+            placeholder="Correo electrónico"
+            keyboardType="email-address"
+            value={correo}
+            onChangeText={setCorreo}
+          />
 
-    <Button title="Registrarse" color="#FF69B4" onPress={mostrarAlerta} />
-       </View>
-     </ImageBackground>
+          {/* Switch términos */}
+          <View style={styles.switchContainer}>
+            <Text style={styles.texto}>Aceptar términos y condiciones</Text>
+
+            <Switch
+              value={aceptaTerminos}
+              onValueChange={setAceptaTerminos}
+              thumbColor={aceptaTerminos ? '#FF69B4' : '#f4f3f4'}
+              trackColor={{ false: '#ccc', true: '#FFB6C1' }}
+            />
+          </View>
+
+          {/* Botón registrar */}
+          <Button
+            title="Registrarse"
+            color="#FF69B4"
+            onPress={mostrarAlerta}
+          />
+
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 }
 
 
+// -------------------- ESTILOS --------------------
 const styles = StyleSheet.create({
   splashContainer: {
     flex: 1,
